@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
       onMounted(() => {
         setTimeout(() => {
           slide.value = true;
-        }, 10000); // activar movimiento a los 10s
+        }, 5000); // activar movimiento a los 5s
       });
 
       return { title, letters, slide, letterStyle, displayChar };
