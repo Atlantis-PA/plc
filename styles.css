@@ -1,0 +1,47 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  font-family: "Cascadia Code", "Fira Code", Consolas, "SFMono-Regular", Menlo,
+    Monaco, "Roboto Mono", ui-monospace, monospace;
+  background: #f9fafb;
+  color: #111827;
+}
+
+h1 {
+  font-size: clamp(2rem, 6vw, 4rem);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+/* Animación por letra */
+.title { display: inline-block; }
+.letters { display: inline-block; }
+.letter { display: inline-block; will-change: transform, opacity; }
+
+/* Aparición sutil escalonada (enter/appear) */
+.fade-appear-from,
+.fade-enter-from { opacity: 0; transform: translateY(8px); }
+.fade-appear-active,
+.fade-enter-active { transition: opacity 500ms ease, transform 500ms ease; }
+.fade-appear-to,
+.fade-enter-to { opacity: 1; transform: translateY(0); }
+
+/* Deslizamiento izquierda-derecha tras 10s */
+.letter.slide { animation: slideX 2500ms ease-in-out infinite alternate; }
+@keyframes slideX {
+  from { transform: translateX(-6px); }
+  to   { transform: translateX(6px); }
+}
+
+/* Respeto a preferencias de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  .fade-appear-active,
+  .fade-enter-active { transition: none; }
+  .letter.slide { animation: none; }
+}
