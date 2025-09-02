@@ -4,27 +4,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Recursos de programación en Panamá: talleres, eventos y aprendizaje." />
   <title>Panama Learning Code</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <div id="app">
-    <h1 class="title">
-      <transition-group name="fade" tag="span" class="letters" appear>
-        <span
-          v-for="(ch, i) in letters"
-          :key="i + '-' + ch"
-          class="letter"
-          :class="{ slide }"
-          :style="letterStyle(i)"
-          v-text="displayChar(ch)"
-        ></span>
+  <main id="app" role="main">
+    <h1 class="title" :aria-label="title">
+      <transition-group name="fade" tag="span" class="letters" appear aria-hidden="true">
+        <span v-for="(ch, i) in letters" :key="i + '-' + ch" class="letter" :class="{ slide }" :style="letterStyle(i)"
+          v-text="displayChar(ch)"></span>
       </transition-group>
     </h1>
-  </div>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js" defer></script>
+  </main>
+  <script 
+    src="https://unpkg.com/vue@3.4.38/dist/vue.global.prod.js" 
+    integrity="sha384-Z9a2xA0EIaURxthVmeQmPrgSC05eG8Lch8X4Y2+lXpTg9wcxPj2m3QNurDl5hLiS" 
+    crossorigin="anonymous" 
+    defer></script>
   <script src="main.js" defer></script>
-  </body>
+</body>
 
 </html>
