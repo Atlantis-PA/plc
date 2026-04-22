@@ -8,3 +8,6 @@ build/
 # Misc
 *.log
 .env
+
+# Node
+node_modules/

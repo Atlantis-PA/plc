@@ -1,31 +1,122 @@
 <!doctype html>
 <html lang="es">
-
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Recursos de programación en Panamá: talleres, eventos y aprendizaje." />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Panama Learning Code: comunidad para aprender a programar, colaborar en proyectos y participar en eventos tech en Panamá." />
+  <meta name="theme-color" content="#0f2027" />
+  <meta property="og:title" content="Panama Learning Code" />
+  <meta property="og:description" content="Aprende, crea y conecta con la comunidad tech de Panamá." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://panamalearningcode.netlify.app" />
+  <meta property="og:image" content="https://panamalearningcode.netlify.app/assets/img/og-banner.png" />
+  <meta property="og:locale" content="es_PA" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Panama Learning Code" />
+  <meta name="twitter:description" content="Learn, build and connect with Panama's tech community." />
+  <meta name="twitter:image" content="https://panamalearningcode.netlify.app/assets/img/og-banner.png" />
   <title>Panama Learning Code</title>
   <link rel="icon" href="assets/icons/plc.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/main.css" />
 </head>
-
 <body>
-  <main id="app" role="main">
-    <h1 class="title" :aria-label="title">
-      <transition-group name="fade" tag="span" class="letters" appear aria-hidden="true">
-        <span v-for="(ch, i) in letters" :key="i + '-' + ch" class="letter" :class="{ slide }" :style="letterStyle(i)"
-          v-text="displayChar(ch)"></span>
-      </transition-group>
-    </h1>
+  <header class="nav-wrapper" role="banner">
+    <a href="#main" class="skip-link">Saltar al contenido</a>
+    <nav class="nav" aria-label="Principal">
+      <div class="left">
+        <a href="#hero" class="brand" aria-label="Inicio Panama Learning Code">
+          <img src="/assets/icons/plc.svg" alt="PLC" />
+          <span class="word">PLC</span>
+        </a>
+      </div>
+      <ul class="links" role="list">
+        <li><a href="#hero">Inicio</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#stats">Stats</a></li>
+        <li><a href="#events">Eventos</a></li>
+        <li><a href="#newsletter">Newsletter</a></li>
+      </ul>
+      <div class="right">
+        <button id="theme-toggle" class="theme-mini" aria-label="Cambiar tema">🌙</button>
+      </div>
+    </nav>
+  </header>
+  <main id="main">
+    <section id="hero" class="hero">
+      <div class="hero-inner">
+        <h1 class="gradient-title"><span id="typewriter"></span></h1>
+        <p class="tagline">Ecosistema colaborativo para aprender a programar, crear proyectos y crecer profesionalmente en Panamá.</p>
+        <div class="hero-ctas">
+          <a href="#features" class="btn primary">Explorar</a>
+          <a href="#newsletter" class="btn ghost">Unirme</a>
+        </div>
+      </div>
+      <canvas id="particles" class="particles" aria-hidden="true"></canvas>
+    </section>
+    <section id="features" class="features">
+      <h2 class="section-title">¿Qué encontrarás?</h2>
+      <div class="grid">
+        <article class="card"><div class="icon bg1">📚</div><h3>Rutas de Aprendizaje</h3><p>Guías estructuradas para avanzar desde cero hasta proyectos reales.</p></article>
+        <article class="card"><div class="icon bg2">🤝</div><h3>Mentoría</h3><p>Apoyo de la comunidad y sesiones guiadas para acelerar tu progreso.</p></article>
+        <article class="card"><div class="icon bg3">🛠️</div><h3>Eventos y Workshops</h3><p>Charlas, hack nights y espacios prácticos para crear.</p></article>
+        <article class="card"><div class="icon bg4">🌱</div><h3>Open Source Local</h3><p>Proyectos panameños a los que puedes contribuir.</p></article>
+        <article class="card"><div class="icon bg5">🌐</div><h3>Networking</h3><p>Conecta con desarrolladores, diseñadores y tech founders.</p></article>
+        <article class="card"><div class="icon bg6">🧭</div><h3>Recursos Curados</h3><p>Listas de herramientas y referencias confiables.</p></article>
+      </div>
+    </section>
+    <section id="stats" class="stats">
+      <div class="wrap">
+        <div class="stat"><div class="value">+350</div><div class="label">Miembros activos</div></div>
+        <div class="stat"><div class="value">24</div><div class="label">Proyectos abiertos</div></div>
+        <div class="stat"><div class="value">18</div><div class="label">Eventos realizados</div></div>
+        <div class="stat"><div class="value">7</div><div class="label">Mentores voluntarios</div></div>
+      </div>
+    </section>
+    <section id="events" class="events">
+      <div class="head">
+        <h2>Eventos & Actividades</h2>
+        <a href="#" class="more">Ver todos →</a>
+      </div>
+      <div class="list">
+        <article class="event"><h3>Intro a JavaScript Moderno</h3><p>Sesión práctica para personas que comienzan.</p><div class="meta">May 10 · Workshop</div></article>
+        <article class="event"><h3>Hack Night: Proyecto Cívico</h3><p>Construimos herramientas para la comunidad.</p><div class="meta">May 24 · Hack Night</div></article>
+        <article class="event"><h3>Mentoría Frontend</h3><p>Revisión de portafolios y feedback.</p><div class="meta">Jun 07 · Mentoría</div></article>
+      </div>
+    </section>
+    <section id="newsletter" class="newsletter">
+      <h2>Mantente al día</h2>
+      <p>Recibe noticias sobre eventos, recursos y oportunidades en el ecosistema tech panameño.</p>
+      <form id="newsletter-form" class="form" name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="newsletter" />
+        <input name="bot-field" style="display:none" aria-hidden="true" />
+        <input type="email" name="email" required placeholder="tu@correo.com" />
+        <button class="btn primary" type="submit">Suscribirme</button>
+      </form>
+      <p id="newsletter-ok" class="ok" style="display:none;">¡Gracias! Te escribiremos pronto.</p>
+    </section>
+    <footer class="site-footer">
+      <div class="top">
+        <div class="brand">
+          <img src="/assets/icons/plc.svg" alt="PLC" />
+          <span>Panama Learning Code</span>
+        </div>
+        <nav class="links">
+          <a href="#features">Features</a>
+          <a href="#events">Eventos</a>
+          <a href="#newsletter">Newsletter</a>
+          <a href="#">Comunidad</a>
+        </nav>
+      </div>
+      <div class="bottom">
+        <small>© 2026 Panama Learning Code · Hecho con pasión por la comunidad.</small>
+      </div>
+    </footer>
   </main>
-  <script 
-    src="https://unpkg.com/vue@3.4.38/dist/vue.global.prod.js" 
-    integrity="sha384-Z9a2xA0EIaURxthVmeQmPrgSC05eG8Lch8X4Y2+lXpTg9wcxPj2m3QNurDl5hLiS" 
-    crossorigin="anonymous" 
-    defer></script>
-  <script src="assets/js/main.js" defer></script>
+  <script src="/assets/js/main.js"></script>
 </body>
-
 </html>
 
