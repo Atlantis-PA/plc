@@ -23,21 +23,22 @@
       <div class="code-card">
         <div class="code-header">
           <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-          <span class="file">aprender.js</span>
+          <span class="file">aprender.py</span>
         </div>
-        <pre class="code-body"><span class="kw">const</span> comunidad = {
-  miembros: <span class="num">350</span>,
-  proyectos: <span class="num">24</span>,
-  eventos:   <span class="num">18</span>,
-  mentores:  <span class="num">7</span>,
-};
+        <pre class="code-body">comunidad = {
+    <span class="str">"miembros"</span>: <span class="num">350</span>,
+    <span class="str">"proyectos"</span>: <span class="num">24</span>,
+    <span class="str">"eventos"</span>:   <span class="num">18</span>,
+    <span class="str">"mentores"</span>:  <span class="num">7</span>,
+}
 
-<span class="kw">function</span> <span class="fn">crecer</span>() {
-  <span class="kw">return</span> comunidad
-    .aprender()
-    .colaborar()
-    .conectar();
-}</pre>
+<span class="kw">def</span> <span class="fn">crecer</span>():
+    <span class="kw">return</span> (
+        comunidad
+        .aprender()
+        .colaborar()
+        .conectar()
+    )</pre>
       </div>
     </div>
   </section>
@@ -179,6 +180,7 @@ h1 em {
 .kw  { color: #60a5fa; }
 .fn  { color: #93c5fd; }
 .num { color: #f0abfc; }
+.str { color: #86efac; }
 
 @media (max-width: 860px) {
   .hero {
