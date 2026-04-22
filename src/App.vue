@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, provide } from 'vue';
 import HeroSection from './components/HeroSection.vue';
 import FeaturesSection from './components/FeaturesSection.vue';
 import StatsSection from './components/StatsSection.vue';
@@ -37,6 +37,7 @@ onMounted(()=>{
   applyTheme();
 });
 const sectionIds = ['hero','features','stats','events','newsletter'];
+provide('isLight', isLight);
 </script>
 
 <style>
@@ -103,8 +104,13 @@ body,
 }
 
 .light {
-  --bg-color: #f0f0f0;
-  --text-color: #333;
+  --bg-color: #f8fafb;
+  --text-color: #172027;
+  /* Darkened accents for WCAG AA contrast on light backgrounds */
+  --color-accent: #0e7490;
+  --color-accent-alt: #0a7a5e;
+  --color-text-dim: #4d626d;
+  --color-success: #0a7a5e;
 }
 
 .dark {

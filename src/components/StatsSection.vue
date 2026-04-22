@@ -9,7 +9,7 @@
           class="stat"
           v-reveal="{ delay: 80 + i * 90 }"
         >
-          <div class="ring" :style="{ '--accent': s.color }">
+          <div class="ring" :style="{ '--accent': isLight ? s.colorLight : s.color }">
             <svg viewBox="0 0 80 80" class="ring-svg" aria-hidden="true">
               <circle cx="40" cy="40" r="34" class="ring-track" />
               <circle cx="40" cy="40" r="34" class="ring-fill" :style="{ '--pct': s.pct }" />
@@ -24,11 +24,15 @@
 </template>
 
 <script setup>
+import { inject } from 'vue';
+const isLight = inject('isLight', false);
+
+// Colors chosen to pass WCAG AA (>=4.5:1) on both dark (#0f2027) and light (#f8fafb) backgrounds
 const stats = [
-  { value: '+350', label: 'Miembros activos',    pct: 0.88, color: '#00b894' },
-  { value: '24',   label: 'Proyectos abiertos',  pct: 0.60, color: '#2193b0' },
-  { value: '18',   label: 'Eventos realizados',  pct: 0.45, color: '#e100ff' },
-  { value: '7',    label: 'Mentores voluntarios', pct: 0.35, color: '#ffd200' },
+  { value: '+350', label: 'Miembros activos',     pct: 0.88, color: '#00b894', colorLight: '#0a7a5e' },
+  { value: '24',   label: 'Proyectos abiertos',   pct: 0.60, color: '#6dd5ed', colorLight: '#0e7490' },
+  { value: '18',   label: 'Eventos realizados',   pct: 0.45, color: '#c084fc', colorLight: '#7c3aed' },
+  { value: '7',    label: 'Mentores voluntarios', pct: 0.35, color: '#fbbf24', colorLight: '#92400e' },
 ];
 </script>
 

@@ -38,8 +38,10 @@ html:focus-within { scroll-behavior:smooth; }
   --color-border-strong:rgba(0,0,0,0.18);
   --color-text:#172027;
   --color-text-dim:#4d626d;
-  --color-accent:#2193b0;
-  --color-accent-alt:#00b894;
+  /* Darkened for WCAG AA on light backgrounds (ratio >= 4.5) */
+  --color-accent:#0e7490;
+  --color-accent-alt:#0a7a5e;
+  --color-success:#0a7a5e;
 }
 
 /* Theme transitions */

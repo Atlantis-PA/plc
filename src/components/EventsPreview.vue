@@ -34,11 +34,15 @@
 </template>
 
 <script setup>
-const events = [
-  { title: 'Intro a JavaScript Moderno', desc: 'Sesión práctica para personas que comienzan desde cero.', date: 'May 10', type: 'Workshop', color: '#2193b0' },
-  { title: 'Hack Night: Proyecto Cívico', desc: 'Construimos herramientas digitales para la comunidad.', date: 'May 24', type: 'Hack Night', color: '#e100ff' },
-  { title: 'Mentoría Frontend', desc: 'Revisión de portafolios y feedback personalizado.', date: 'Jun 07', type: 'Mentoría', color: '#00b894' },
+import { inject, computed } from 'vue';
+const isLight = inject('isLight', false);
+
+const eventsData = [
+  { title: 'Intro a JavaScript Moderno', desc: 'Sesión práctica para personas que comienzan desde cero.', date: 'May 10', type: 'Workshop',   dark: '#2193b0', light: '#0e7490' },
+  { title: 'Hack Night: Proyecto Cívico', desc: 'Construimos herramientas digitales para la comunidad.', date: 'May 24', type: 'Hack Night', dark: '#c084fc', light: '#7c3aed' },
+  { title: 'Mentoría Frontend', desc: 'Revisión de portafolios y feedback personalizado.',               date: 'Jun 07', type: 'Mentoría',   dark: '#00b894', light: '#0a7a5e' },
 ];
+const events = computed(() => eventsData.map(e => ({ ...e, color: isLight.value ? e.light : e.dark })));
 </script>
 
 <style scoped>

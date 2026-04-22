@@ -112,9 +112,9 @@ async function submit() {
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--color-accent-alt);
-  background: rgba(33,147,176,.12);
-  border: 1px solid rgba(33,147,176,.3);
+  color: var(--color-accent);
+  background: rgba(0,184,148,.12);
+  border: 1px solid rgba(0,184,148,.35);
   padding: .35rem 1rem;
   border-radius: 999px;
   margin-bottom: 1.4rem;
@@ -124,10 +124,7 @@ async function submit() {
   font-size: clamp(2rem, 4vw, 3rem);
   margin: 0 0 1rem;
   font-weight: 800;
-  background: linear-gradient(90deg, var(--color-text), var(--color-text-dim));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--color-text);
 }
 .nl-inner > p {
   margin: 0 auto 2rem;
