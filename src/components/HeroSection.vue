@@ -1,268 +1,193 @@
 <template>
-  <section class="hero" id="hero">
-    <div class="hero-bg-orb orb1" aria-hidden="true"></div>
-    <div class="hero-bg-orb orb2" aria-hidden="true"></div>
-    <div class="hero-bg-orb orb3" aria-hidden="true"></div>
+  <section id="hero" class="hero">
     <div class="hero-inner">
-      <div class="badge-pill" v-reveal>
-        <span class="dot" aria-hidden="true"></span>
-        Comunidad tech · Panamá
-      </div>
-      <h1 class="gradient-title" v-html="displayedTitle" v-reveal="{ delay: 60 }" />
-      <p class="tagline" v-reveal="{ delay: 160 }">
-        Ecosistema colaborativo para aprender a programar,<br class="br" />
-        crear proyectos y crecer profesionalmente.
+      <div class="hero-label">Comunidad · Panamá</div>
+      <h1>Aprende a programar.<br />Construye el futuro<br /><em>de Panamá.</em></h1>
+      <p class="hero-sub">
+        Panama Learning Code es un ecosistema sin fines de lucro que conecta a personas
+        con recursos, mentores y eventos para crecer en tecnología.
       </p>
-      <div class="hero-ctas" v-reveal="{ delay: 260 }">
-        <a href="#features" class="btn primary">
-          <span>Explorar</span>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="#newsletter" class="btn ghost">Unirme gratis</a>
+      <div class="hero-ctas">
+        <a href="#features" class="btn btn-primary">Explorar el programa</a>
+        <a href="#newsletter" class="btn btn-outline">Unirse a la comunidad</a>
       </div>
-      <div class="hero-pills" v-reveal="{ delay: 360 }">
-        <span v-for="t in tags" :key="t" class="pill">{{ t }}</span>
+      <div class="hero-trust">
+        <span>Más de <strong>350 miembros</strong> activos</span>
+        <span class="sep" aria-hidden="true">·</span>
+        <span><strong>18 eventos</strong> realizados</span>
+        <span class="sep" aria-hidden="true">·</span>
+        <span><strong>100% gratuito</strong></span>
       </div>
     </div>
-    <canvas ref="canvas" class="particles" aria-hidden="true"></canvas>
-    <div class="hero-wave" aria-hidden="true">
-      <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--color-bg)" opacity="0.6"/>
-        <path d="M0,60 C480,20 960,80 1440,50 L1440,80 L0,80 Z" fill="var(--color-bg)"/>
-      </svg>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="code-card">
+        <div class="code-header">
+          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+          <span class="file">aprender.js</span>
+        </div>
+        <pre class="code-body"><span class="kw">const</span> comunidad = {
+  miembros: <span class="num">350</span>,
+  proyectos: <span class="num">24</span>,
+  eventos:   <span class="num">18</span>,
+  mentores:  <span class="num">7</span>,
+};
+
+<span class="kw">function</span> <span class="fn">crecer</span>() {
+  <span class="kw">return</span> comunidad
+    .aprender()
+    .colaborar()
+    .conectar();
+}</pre>
+      </div>
     </div>
   </section>
 </template>
 
-<script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
-
-const fullTitle = 'Panama <span class="thin">Learning</span> Code';
-const displayedTitle = ref('');
-const canvas = ref(null);
-const tags = ['JavaScript', 'Python', 'Open Source', 'Eventos', 'Mentoría'];
-let frame, idx = 0;
-
-function typeLoop() {
-  if (idx <= fullTitle.length) {
-    displayedTitle.value = fullTitle.slice(0, idx);
-    idx++;
-    setTimeout(typeLoop, 50);
-  }
-}
-
-function initParticles() {
-  const ctx = canvas.value.getContext('2d');
-  const particles = Array.from({ length: 55 }, () => ({
-    x: Math.random(),
-    y: Math.random(),
-    r: Math.random() * 1.8 + 0.4,
-    vx: (Math.random() - 0.5) * 0.15,
-    vy: (Math.random() - 0.5) * 0.15,
-    alpha: Math.random() * 0.4 + 0.15,
-  }));
-
-  function resize() {
-    canvas.value.width = canvas.value.offsetWidth * devicePixelRatio;
-    canvas.value.height = canvas.value.offsetHeight * devicePixelRatio;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  function loop() {
-    const w = canvas.value.width, h = canvas.value.height;
-    ctx.clearRect(0, 0, w, h);
-    particles.forEach(p => {
-      p.x += p.vx / w * devicePixelRatio;
-      p.y += p.vy / h * devicePixelRatio;
-      if (p.x < 0) p.x = 1; if (p.x > 1) p.x = 0;
-      if (p.y < 0) p.y = 1; if (p.y > 1) p.y = 0;
-      ctx.beginPath();
-      ctx.arc(p.x * w, p.y * h, p.r * devicePixelRatio, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(109,213,237,${p.alpha})`;
-      ctx.fill();
-    });
-    frame = requestAnimationFrame(loop);
-  }
-  loop();
-}
-
-onMounted(() => { typeLoop(); initParticles(); });
-onBeforeUnmount(() => cancelAnimationFrame(frame));
-</script>
-
 <style scoped>
 .hero {
-  position: relative;
+  padding-top: 68px; /* nav height */
   min-height: 100svh;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
-  justify-content: center;
-  padding: clamp(6rem, 12vw, 10rem) 1.5rem 6rem;
-  text-align: center;
-  overflow: hidden;
+  gap: 4rem;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-bottom: 5rem;
 }
 
-/* Orbes de fondo */
-.hero-bg-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  pointer-events: none;
-  opacity: .18;
-  animation: drift 20s ease-in-out infinite alternate;
-}
-.orb1 { width: 500px; height: 500px; background: #2193b0; top: -120px; left: -100px; animation-duration: 22s; }
-.orb2 { width: 400px; height: 400px; background: #00b894; bottom: 60px; right: -80px; animation-duration: 18s; animation-delay: -6s; }
-.orb3 { width: 300px; height: 300px; background: #7f00ff; top: 40%; left: 50%; transform: translate(-50%,-50%); animation-duration: 28s; animation-delay: -12s; opacity: .10; }
-@keyframes drift {
-  0%   { transform: translate(0, 0) scale(1); }
-  50%  { transform: translate(30px, -20px) scale(1.05); }
-  100% { transform: translate(-20px, 30px) scale(.97); }
-}
-.orb3 { animation-name: drift3; }
-@keyframes drift3 {
-  0%   { transform: translate(-50%, -50%) scale(1); }
-  100% { transform: translate(calc(-50% + 40px), calc(-50% - 30px)) scale(1.1); }
-}
+.hero-inner { max-width: 560px; }
 
-/* Badge pill */
-.badge-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  background: rgba(0,184,148,.12);
-  border: 1px solid rgba(0,184,148,.3);
-  color: var(--color-accent);
+.hero-label {
+  display: inline-block;
   font-size: .78rem;
-  font-weight: 600;
-  letter-spacing: 1px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
   text-transform: uppercase;
-  padding: .4rem 1rem;
+  color: var(--blue);
+  background: var(--blue-light);
+  padding: .35rem .9rem;
   border-radius: 999px;
   margin-bottom: 1.6rem;
-  backdrop-filter: blur(8px);
-}
-.dot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: var(--color-accent);
-  box-shadow: 0 0 6px var(--color-accent);
-  animation: pulse 2s ease-in-out infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: .5; transform: scale(.7); }
 }
 
-.hero-inner {
-  position: relative;
-  z-index: 1;
-  max-width: 860px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.gradient-title {
-  font-size: clamp(3rem, 9vw, 5.5rem);
-  line-height: 1.03;
+h1 {
+  font-size: clamp(2.6rem, 5vw, 4rem);
   font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.03em;
+  color: var(--text);
   margin: 0 0 1.4rem;
-  background: linear-gradient(90deg, #6dd5ed, #2193b0, #00b894, #6dd5ed);
-  background-size: 300% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: slideGradient 14s ease infinite;
-  min-height: 1.1em;
 }
-.gradient-title :deep(.thin) { font-weight: 300; }
-@keyframes slideGradient {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+h1 em {
+  font-style: normal;
+  color: var(--blue);
 }
 
-.tagline {
-  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
-  margin: 0 auto 2.2rem;
-  max-width: 640px;
-  color: var(--color-text-dim);
-  line-height: 1.65;
+.hero-sub {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text-dim);
+  margin: 0 0 2.2rem;
+  max-width: 480px;
 }
-.br { display: none; }
-@media (min-width: 600px) { .br { display: inline; } }
 
-/* CTAs */
 .hero-ctas {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
+  gap: .9rem;
   flex-wrap: wrap;
-  margin-bottom: 2.2rem;
+  margin-bottom: 2rem;
 }
+
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: .55rem;
-  padding: .95rem 1.9rem;
-  font-weight: 600;
+  padding: .8rem 1.6rem;
   border-radius: var(--radius);
+  font-weight: 600;
+  font-size: .95rem;
   text-decoration: none;
-  font-size: 1rem;
-  letter-spacing: .4px;
-  transition: transform .25s, box-shadow .25s, background .3s;
+  transition: transform .15s, box-shadow .15s, background .2s;
 }
-.btn.primary {
-  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-alt));
+.btn-primary {
+  background: var(--blue);
   color: #fff;
-  box-shadow: 0 8px 28px -10px rgba(0,184,148,.45);
+  box-shadow: 0 4px 14px rgba(26,86,219,.3);
 }
-.btn.primary:hover { transform: translateY(-3px); box-shadow: 0 16px 36px -10px rgba(0,184,148,.55); }
-.btn.ghost {
-  background: var(--color-surface);
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
-  backdrop-filter: blur(8px);
+.btn-primary:hover { background: var(--blue-dark); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(26,86,219,.35); }
+.btn-outline {
+  background: transparent;
+  color: var(--text);
+  border: 1.5px solid var(--border);
 }
-.btn.ghost:hover { background: var(--color-surface-hover); transform: translateY(-2px); }
+.btn-outline:hover { background: var(--bg-alt); transform: translateY(-1px); }
 
-/* Pills de tecnologías */
-.hero-pills {
+.hero-trust {
   display: flex;
   flex-wrap: wrap;
+  gap: .5rem 1rem;
+  font-size: .85rem;
+  color: var(--text-dim);
+  align-items: center;
+}
+.hero-trust strong { color: var(--text); }
+.sep { opacity: .4; }
+
+/* Code card */
+.hero-visual {
+  display: flex;
   justify-content: center;
-  gap: .5rem;
 }
-.pill {
-  font-size: .72rem;
-  font-weight: 600;
-  letter-spacing: .8px;
-  padding: .3rem .85rem;
-  border-radius: 999px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  color: var(--color-text-dim);
-  backdrop-filter: blur(6px);
-  transition: color .3s, border-color .3s, background .3s;
+.code-card {
+  background: #0d1321;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md), 0 0 0 1px rgba(255,255,255,.06);
+  overflow: hidden;
+  width: 100%;
+  max-width: 420px;
 }
-.pill:hover { color: var(--color-text); border-color: var(--color-border-strong); background: var(--color-surface-hover); }
+.code-header {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  padding: .9rem 1.2rem;
+  background: #141b2d;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+.dot { width: 11px; height: 11px; border-radius: 50%; }
+.dot.red    { background: #ff5f57; }
+.dot.yellow { background: #febc2e; }
+.dot.green  { background: #28c840; }
+.file {
+  margin-left: .5rem;
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  color: rgba(255,255,255,.45);
+}
+.code-body {
+  margin: 0;
+  padding: 1.5rem 1.4rem;
+  font-family: var(--font-mono);
+  font-size: .82rem;
+  line-height: 1.75;
+  color: #c9d1e3;
+  white-space: pre;
+  overflow-x: auto;
+}
+.kw  { color: #60a5fa; }
+.fn  { color: #93c5fd; }
+.num { color: #f0abfc; }
 
-/* Canvas partículas */
-.particles {
-  position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding-top: calc(68px + 3rem);
+    padding-bottom: 3rem;
+    gap: 2.5rem;
+  }
+  .hero-visual { display: none; }
 }
-
-/* Onda inferior */
-.hero-wave {
-  position: absolute;
-  bottom: -1px; left: 0; right: 0;
-  line-height: 0;
-}
-.hero-wave svg { width: 100%; height: 80px; }
 </style>

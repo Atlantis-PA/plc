@@ -1,126 +1,136 @@
 <template>
-  <div id="app" class="layout" :class="themeClass">
-    <NavBar :is-light="isLight" :sections="sectionIds" @toggleTheme="toggleTheme" />
-    <HeroSection id="hero" />
-    <FeaturesSection id="features" />
-    <StatsSection id="stats" />
-    <EventsPreview id="events" />
-    <NewsletterSignup id="newsletter" />
+  <div :class="['layout', isLight ? 'light' : 'dark']">
+    <NavBar :is-light="isLight" @toggleTheme="toggleTheme" />
+    <RouterView />
     <FooterSection />
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, provide } from 'vue';
-import HeroSection from './components/HeroSection.vue';
-import FeaturesSection from './components/FeaturesSection.vue';
-import StatsSection from './components/StatsSection.vue';
-import EventsPreview from './components/EventsPreview.vue';
-import NewsletterSignup from './components/NewsletterSignup.vue';
-import FooterSection from './components/FooterSection.vue';
+import { ref, onMounted, provide } from 'vue';
+import { RouterView } from 'vue-router';
 import NavBar from './components/NavBar.vue';
+import FooterSection from './components/FooterSection.vue';
 
-const isLight = ref(false);
-const themeClass = computed(()=> isLight.value ? 'light' : 'dark');
-function applyTheme(){
-  const root = document.documentElement; 
-  if(isLight.value){ root.classList.add('light'); } else { root.classList.remove('light'); }
-  localStorage.setItem('plc-theme', isLight.value ? 'light':'dark');
+const isLight = ref(true);
+
+function applyTheme() {
+  document.documentElement.classList.toggle('light', isLight.value);
+  localStorage.setItem('plc-theme', isLight.value ? 'light' : 'dark');
 }
-function toggleTheme(){ isLight.value = !isLight.value; applyTheme(); }
-onMounted(()=>{
+function toggleTheme() { isLight.value = !isLight.value; applyTheme(); }
+
+onMounted(() => {
   const saved = localStorage.getItem('plc-theme');
-  if(saved) isLight.value = saved === 'light'; else {
-    // Auto preferencia del sistema
-    isLight.value = window.matchMedia('(prefers-color-scheme: light)').matches;
-  }
+  isLight.value = saved ? saved === 'light' : window.matchMedia('(prefers-color-scheme: light)').matches;
   applyTheme();
 });
-const sectionIds = ['hero','features','stats','events','newsletter'];
+
 provide('isLight', isLight);
 </script>
 
 <style>
-.layout {
-  min-height: 100vh;
-  background: radial-gradient(circle at 20% 20%, #143642, #0f2027 55%, #08252e 90%);
-  color: #fff;
-  font-family: 'Inter', 'Montserrat', Arial, sans-serif;
-  position: relative;
+/* ── Design tokens ───────────────────────────────── */
+:root {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --bg:        #ffffff;
+  --bg-alt:    #f4f6f9;
+  --bg-dark:   #0d1321;
+  --surface:   #ffffff;
+  --border:    #e2e6ed;
+  --text:      #0d1321;
+  --text-dim:  #5a6478;
+  --blue:      #1a56db;
+  --blue-dark: #1239a6;
+  --blue-light:#dbeafe;
+  --radius:    10px;
+  --radius-lg: 16px;
+  --container: 1140px;
+  --shadow:    0 2px 12px rgba(0,0,0,.08);
+  --shadow-md: 0 6px 24px rgba(0,0,0,.11);
+  --nav-h:     68px;
 }
-/* Fondo animado sutil */
-.layout::before,
-.layout::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 80% 10%, rgba(0, 184, 148, .18), transparent 60%),
-    radial-gradient(circle at 10% 80%, rgba(33, 147, 176, .18), transparent 65%);
-  mix-blend-mode: screen;
-  animation: floatBg 18s linear infinite alternate;
-  pointer-events: none;
-}
-.layout::after {
-  animation-duration: 28s;
-  filter: blur(40px);
-  opacity: .6;
-}
-@keyframes floatBg {
-  0% {
-    transform: translateY(0) scale(1);
-  }
-  50% {
-    transform: translateY(-25px) scale(1.02);
-  }
-  100% {
-    transform: translateY(10px) scale(1);
-  }
-}
-
-/* Utilidades */
-html,
-body,
-#app {
-  margin: 0;
-}
-
-.theme-toggle {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  border: none;
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  transition: background 0.3s, color 0.3s;
-  z-index: 1000;
-}
-
-.theme-toggle:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.light {
-  --bg-color: #f8fafb;
-  --text-color: #172027;
-  /* Darkened accents for WCAG AA contrast on light backgrounds */
-  --color-accent: #0e7490;
-  --color-accent-alt: #0a7a5e;
-  --color-text-dim: #4d626d;
-  --color-success: #0a7a5e;
-}
-
 .dark {
-  --bg-color: #143642;
-  --text-color: #fff;
+  --bg:        #0d1321;
+  --bg-alt:    #141b2d;
+  --surface:   #1a2238;
+  --border:    #2a3550;
+  --text:      #f0f4ff;
+  --text-dim:  #8b9ab8;
+  --blue:      #60a5fa;
+  --blue-dark: #3b82f6;
+  --blue-light:#1e3a5f;
+  --shadow:    0 2px 12px rgba(0,0,0,.35);
+  --shadow-md: 0 6px 24px rgba(0,0,0,.45);
 }
 
+/* ── Reset ───────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html, body { margin: 0; min-height: 100%; }
 body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  transition: background-color 0.3s, color 0.3s;
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  transition: background .3s, color .3s;
+}
+img { display: block; max-width: 100%; }
+
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 4px; }
+
+.skip-link {
+  position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden;
+}
+.skip-link:focus {
+  left: 1rem; top: 1rem; width: auto; height: auto;
+  padding: .6rem 1.2rem; background: var(--blue); color: #fff;
+  border-radius: var(--radius); z-index: 999; font-weight: 600;
+  text-decoration: none;
+}
+
+*::-webkit-scrollbar { width: 8px; }
+*::-webkit-scrollbar-track { background: var(--bg-alt); }
+*::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 8px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+.layout { min-height: 100vh; display: flex; flex-direction: column; }
+
+/* ── Shared page utility classes ─────────────────── */
+.page-hero {
+  padding: calc(var(--nav-h) + 3.5rem) 1.5rem 4rem;
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--border);
+}
+.page-hero-inner { max-width: var(--container); margin: 0 auto; }
+.page-hero .overline {
+  font-size: .78rem; font-weight: 700; letter-spacing: 1.8px;
+  text-transform: uppercase; color: var(--blue); margin: 0 0 .8rem;
+}
+.page-hero h1 {
+  font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;
+  letter-spacing: -.03em; color: var(--text);
+  margin: 0 0 1rem; line-height: 1.15;
+}
+.page-hero p {
+  font-size: 1.05rem; color: var(--text-dim);
+  line-height: 1.7; margin: 0; max-width: 620px;
+}
+
+.page-body { flex: 1; padding: 4rem 1.5rem; }
+.page-body-inner { max-width: var(--container); margin: 0 auto; }
+
+.section-label {
+  font-size: .78rem; font-weight: 700; letter-spacing: 1.8px;
+  text-transform: uppercase; color: var(--blue); margin: 0 0 .6rem;
+}
+.section-title {
+  font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800;
+  letter-spacing: -.03em; color: var(--text);
+  margin: 0 0 2rem; line-height: 1.2;
 }
 </style>

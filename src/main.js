@@ -1,5 +1,6 @@
 // Entrada principal para Vite
 import { createApp } from 'vue';
+import router from './router/index.js';
 import App from './App.vue';
 
 // Directiva de reveal con variantes (fade|up|scale)
@@ -30,4 +31,5 @@ const revealDirective = {
 
 const app = createApp(App);
 app.directive('reveal', revealDirective);
+app.use(router);
 app.mount('#app');

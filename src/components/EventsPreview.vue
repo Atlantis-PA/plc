@@ -1,31 +1,24 @@
 <template>
-  <section class="events">
-    <div class="events-inner">
-      <div class="head" v-reveal>
+  <section id="events" class="events">
+    <div class="inner">
+      <div class="section-header" v-reveal>
         <div>
-          <p class="overline">Próximamente</p>
-          <h2>Eventos & Actividades</h2>
+          <p class="overline">Agenda</p>
+          <h2>Próximos eventos</h2>
         </div>
-        <a href="#" class="more">Ver todos <span aria-hidden="true">→</span></a>
+        <a href="#" class="see-all">Ver todos los eventos →</a>
       </div>
       <div class="list">
-        <article
-          v-for="(e, i) in events"
-          :key="e.title"
-          class="event"
-          v-reveal="{ delay: 80 + i * 90 }"
-        >
-          <div class="event-accent" :style="{ background: e.color }"></div>
+        <article v-for="(e, i) in events" :key="e.title" class="event-card" v-reveal="{ delay: i * 70 }">
+          <div class="event-date">
+            <span class="month">{{ e.month }}</span>
+            <span class="day">{{ e.day }}</span>
+          </div>
           <div class="event-body">
-            <div class="event-top">
-              <span class="badge" :style="{ color: e.color, borderColor: e.color + '55', background: e.color + '18' }">
-                {{ e.type }}
-              </span>
-              <span class="date">{{ e.date }}</span>
-            </div>
+            <span class="badge">{{ e.type }}</span>
             <h3>{{ e.title }}</h3>
             <p>{{ e.desc }}</p>
-            <a href="#" class="event-cta">Más info <span aria-hidden="true">→</span></a>
+            <a href="#" class="event-link">Más información →</a>
           </div>
         </article>
       </div>
@@ -34,43 +27,18 @@
 </template>
 
 <script setup>
-import { inject, computed } from 'vue';
-const isLight = inject('isLight', false);
-
-const eventsData = [
-  { title: 'Intro a JavaScript Moderno', desc: 'Sesión práctica para personas que comienzan desde cero.', date: 'May 10', type: 'Workshop',   dark: '#2193b0', light: '#0e7490' },
-  { title: 'Hack Night: Proyecto Cívico', desc: 'Construimos herramientas digitales para la comunidad.', date: 'May 24', type: 'Hack Night', dark: '#c084fc', light: '#7c3aed' },
-  { title: 'Mentoría Frontend', desc: 'Revisión de portafolios y feedback personalizado.',               date: 'Jun 07', type: 'Mentoría',   dark: '#00b894', light: '#0a7a5e' },
+const events = [
+  { month: 'May', day: '10', title: 'Intro a JavaScript Moderno', desc: 'Sesión práctica para personas que comienzan desde cero. No se requiere experiencia previa.', type: 'Workshop' },
+  { month: 'May', day: '24', title: 'Hack Night: Proyecto Cívico', desc: 'Construimos herramientas digitales de impacto para la comunidad panameña en una noche.', type: 'Hack Night' },
+  { month: 'Jun', day: '07', title: 'Mentoría Frontend',           desc: 'Sesión de revisión de portafolios y retroalimentación personalizada con mentores senior.', type: 'Mentoría' },
 ];
-const events = computed(() => eventsData.map(e => ({ ...e, color: isLight.value ? e.light : e.dark })));
 </script>
 
 <style scoped>
-.events {
-  padding: 6rem 1.5rem;
-  position: relative;
-}
-.events::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 50%; transform: translateX(-50%);
-  width: min(900px, 100%);
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-border-strong), transparent);
-}
-.events-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-}
-.overline {
-  font-size: .72rem;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: var(--color-accent);
-  margin: 0 0 .4rem;
-}
-.head {
+.events { padding: 6rem 1.5rem; background: var(--bg); }
+.inner { max-width: var(--container); margin: 0 auto; }
+
+.section-header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -78,113 +46,117 @@ const events = computed(() => eventsData.map(e => ({ ...e, color: isLight.value 
   flex-wrap: wrap;
   margin-bottom: 2.5rem;
 }
-.head h2 {
-  font-size: clamp(1.9rem, 3.5vw, 2.6rem);
-  margin: 0;
+.overline {
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin: 0 0 .5rem;
+}
+h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
   font-weight: 800;
+  letter-spacing: -.03em;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.2;
 }
-.more {
-  text-decoration: none;
-  color: var(--color-accent);
+.see-all {
+  font-size: .88rem;
   font-weight: 600;
-  font-size: .9rem;
-  letter-spacing: .5px;
-  display: inline-flex;
-  align-items: center;
-  gap: .3rem;
-  transition: gap .25s;
+  color: var(--blue);
+  text-decoration: none;
+  white-space: nowrap;
+  padding-bottom: .2rem;
 }
-.more:hover { gap: .6rem; }
+.see-all:hover { text-decoration: underline; }
 
-.list {
-  display: grid;
-  gap: 1.4rem;
-  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-}
+.list { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
 
-/* Event card */
-.event {
+.event-card {
   display: flex;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  backdrop-filter: blur(8px);
-  transition: transform .4s cubic-bezier(.16,.8,.24,1), background .4s, border-color .4s, box-shadow .4s;
+  gap: 0;
+  background: var(--surface);
+  transition: background .2s;
 }
-.event:hover {
-  transform: translateY(-6px);
-  background: var(--color-surface-hover);
-  border-color: var(--color-border-strong);
-  box-shadow: 0 24px 48px -16px rgba(0,0,0,.5);
-}
+.event-card:hover { background: var(--bg-alt); }
+.event-card + .event-card { border-top: 1px solid var(--border); }
 
-.event-accent {
-  width: 4px;
+.event-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 88px;
+  padding: 1.5rem 1rem;
+  border-right: 1px solid var(--border);
+  background: var(--bg-alt);
+  text-align: center;
   flex-shrink: 0;
-  border-radius: 4px 0 0 4px;
-  opacity: .85;
+}
+.month {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--blue);
+  line-height: 1;
+}
+.day {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -.03em;
+  color: var(--text);
+  line-height: 1.1;
+  margin-top: .2rem;
 }
 
 .event-body {
-  padding: 1.5rem 1.4rem;
+  padding: 1.5rem 1.75rem;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: .5rem;
-  flex: 1;
+  gap: .4rem;
 }
-
-.event-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: .6rem;
-  flex-wrap: wrap;
-}
-
 .badge {
-  font-size: .65rem;
+  display: inline-block;
+  font-size: .7rem;
+  font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
-  font-weight: 700;
-  padding: .25rem .65rem;
+  color: var(--blue);
+  background: var(--blue-light);
+  padding: .2rem .7rem;
   border-radius: 999px;
-  border: 1px solid;
+  width: fit-content;
+  margin-bottom: .1rem;
 }
-
-.date {
-  font-size: .75rem;
-  color: var(--color-text-dim);
-  font-weight: 500;
-  letter-spacing: .5px;
-}
-
-.event h3 {
-  margin: .3rem 0 0;
-  font-size: 1.1rem;
+.event-body h3 {
+  font-size: 1.05rem;
   font-weight: 700;
-  letter-spacing: .2px;
-  line-height: 1.3;
-}
-.event p {
+  color: var(--text);
   margin: 0;
+  letter-spacing: -.01em;
+}
+.event-body p {
   font-size: .88rem;
-  color: var(--color-text-dim);
-  line-height: 1.55;
-  flex: 1;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin: 0;
 }
-
-.event-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: .3rem;
-  margin-top: .4rem;
-  font-size: .82rem;
+.event-link {
+  font-size: .85rem;
   font-weight: 600;
-  color: var(--color-accent);
+  color: var(--blue);
   text-decoration: none;
-  letter-spacing: .3px;
-  transition: gap .25s;
+  margin-top: .3rem;
+  width: fit-content;
 }
-.event-cta:hover { gap: .55rem; }
+.event-link:hover { text-decoration: underline; }
+
+@media (max-width: 500px) {
+  .event-date { min-width: 70px; }
+  .event-body { padding: 1.2rem 1.2rem; }
+}
 </style>
