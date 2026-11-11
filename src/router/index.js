@@ -1,11 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
-  { path: '/',          component: () => import('../pages/HomePage.vue'),      meta: { title: 'Panama Learning Code' } },
-  { path: '/eventos',   component: () => import('../pages/EventosPage.vue'),   meta: { title: 'Eventos · PLC' } },
-  { path: '/comunidad', component: () => import('../pages/ComunidadPage.vue'), meta: { title: 'Comunidad · PLC' } },
-  { path: '/mentores',  component: () => import('../pages/MentoresPage.vue'),  meta: { title: 'Mentores · PLC' } },
-  { path: '/sobre',     component: () => import('../pages/SobrePage.vue'),     meta: { title: 'Sobre PLC' } },
+  { path: '/',              component: () => import('../pages/HomePage.vue'),          meta: { title: 'Panama Learning Code' } },
+  { path: '/participa',     component: () => import('../pages/ParticipaPage.vue'),     meta: { title: 'Participa · Panama Learning Code' } },
+  { path: '/organizadores', component: () => import('../pages/OrganizadoresPage.vue'), meta: { title: 'Organizadores · Panama Learning Code' } },
+  { path: '/comunidades',   component: () => import('../pages/ComunidadesPage.vue'),   meta: { title: 'Comunidades · Panama Learning Code' } },
+  { path: '/nosotros',      component: () => import('../pages/NosotrosPage.vue'),      meta: { title: 'Nosotros · Panama Learning Code' } },
+  { path: '/aliados',       component: () => import('../pages/AliadosPage.vue'),       meta: { title: 'Aliados · Panama Learning Code' } },
+  // Rutas anteriores
+  { path: '/eventos',   redirect: '/participa' },
+  { path: '/mentores',  redirect: '/participa' },
+  { path: '/comunidad', redirect: '/comunidades' },
+  { path: '/sobre',     redirect: '/nosotros' },
   { path: '/:pathMatch(.*)*', redirect: '/' },
 ];
 
@@ -14,8 +20,8 @@ const router = createRouter({
   routes,
   scrollBehavior(to, _from, savedPosition) {
     if (savedPosition) return savedPosition;
-    if (to.hash) return { el: to.hash, top: 80, behavior: 'smooth' };
-    return { top: 0, behavior: 'smooth' };
+    if (to.hash) return { el: to.hash, behavior: 'smooth' };
+    return { top: 0 };
   },
 });
 

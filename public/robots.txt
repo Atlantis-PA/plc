@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://panamalearningcode.netlify.app/sitemap.xml
+Sitemap: https://panamalearningcode.org/sitemap.xml

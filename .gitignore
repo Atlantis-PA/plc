@@ -1,13 +1,47 @@
-# OS
+# Sistema operativo
 .DS_Store
+._*
+Thumbs.db
 
-# Builds/outputs
+# Dependencias, compilaciones y cobertura
+node_modules/
 dist/
 build/
+coverage/
+.vite/
+.cache/
 
-# Misc
+# Logs y archivos temporales
 *.log
-.env
+*.tsbuildinfo
+*.swp
+*.swo
+*~
 
-# Node
-node_modules/
+# Variables locales y credenciales (las plantillas sí se versionan)
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.p12
+*.pfx
+.npmrc
+.netrc
+id_rsa
+id_ed25519
+.aws/
+.ssh/
+
+# Configuración local de editores, asistentes y despliegue
+.vscode/
+.idea/
+*.local.json
+.claude/settings.local.json
+.netlify/
+.vercel/
+
+# Material privado: nunca colocar estos archivos dentro de public/
+/private/
+/tmp/

@@ -6,33 +6,38 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Panama Learning Code</title>
     <meta name="description"
-        content="Panama Learning Code: comunidad para aprender a programar, colaborar en proyectos y participar en eventos tech en Panamá." />
-    <meta name="theme-color" content="#0f2027" />
+        content="Panama Learning Code: la comunidad para aprender a crear con tecnología en Panamá. Talleres, proyectos colaborativos y apoyo a comunidades tech." />
+    <meta name="theme-color" content="#072357" />
+    <link rel="canonical" href="https://panamalearningcode.org/" />
     <meta property="og:title" content="Panama Learning Code" />
-    <meta property="og:description" content="Collaborative ecosystem to learn coding, build projects and grow professionally in Panama." />
+    <meta property="og:description" content="La comunidad para aprender a crear con tecnología en Panamá." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://panamalearningcode.netlify.app" />
-    <meta property="og:image" content="https://panamalearningcode.netlify.app/assets/img/og-banner.png" />
+    <meta property="og:url" content="https://panamalearningcode.org/" />
     <meta property="og:locale" content="es_PA" />
-    <meta property="og:locale:alternate" content="en_US" />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Panama Learning Code" />
-    <meta name="twitter:description" content="Learn, build and connect with Panama's tech community." />
-    <meta name="twitter:image" content="https://panamalearningcode.netlify.app/assets/img/og-banner.png" />
+    <meta name="twitter:description" content="La comunidad para aprender a crear con tecnología en Panamá." />
     <link rel="icon" type="image/svg+xml" href="/assets/icons/plc.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
         rel="stylesheet" />
-    <link rel="stylesheet" href="/assets/css/main.css" />
 </head>
 
 <body>
     <div id="app"></div>
-    <!-- Netlify Forms detection — do not remove -->
+    <!-- Detección de Netlify Forms: no eliminar -->
     <form name="newsletter" data-netlify="true" netlify-honeypot="bot-field" hidden>
       <input type="email" name="email" />
+      <input name="bot-field" />
+    </form>
+    <form name="contacto" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input name="tipo" />
+      <input name="nombre" />
+      <input type="email" name="email" />
+      <input name="organizacion" />
+      <textarea name="mensaje"></textarea>
       <input name="bot-field" />
     </form>
     <script type="module" src="/src/main.js"></script>

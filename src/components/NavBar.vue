@@ -1,202 +1,94 @@
 <template>
-  <header class="nav-wrapper" :class="{ scrolled }" role="banner">
+  <header class="nav-wrap" :class="{ scrolled }">
     <a href="#main" class="skip-link">Saltar al contenido</a>
-    <nav class="nav" aria-label="Principal">
-
-      <RouterLink to="/" class="brand" aria-label="Panama Learning Code — Inicio">
-        <img src="/assets/icons/plc.svg" alt="" width="34" height="34" aria-hidden="true" />
+    <nav class="container nav" aria-label="Principal">
+      <RouterLink to="/" class="brand" aria-label="Panama Learning Code, inicio">
+        <img src="/assets/icons/plc.svg" alt="" width="36" height="36" />
         <span>Panama Learning Code</span>
       </RouterLink>
 
-      <ul class="links" role="list">
-        <li v-for="l in links" :key="l.to">
-          <RouterLink :to="l.to" class="nav-link" active-class="active">{{ l.label }}</RouterLink>
+      <ul class="links">
+        <li v-for="l in navegacion" :key="l.to">
+          <RouterLink :to="l.to" class="link" active-class="active">{{ l.label }}</RouterLink>
         </li>
       </ul>
 
-      <div class="nav-actions">
-        <button
-          class="theme-btn"
-          @click="$emit('toggleTheme')"
-          :aria-label="`Cambiar a tema ${isLight ? 'oscuro' : 'claro'}`"
-        >
-          <!-- Sun -->
-          <svg v-if="isLight" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-          </svg>
-          <!-- Moon -->
-          <svg v-else width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      <div class="acciones">
+        <button class="icon-btn" type="button" @click="$emit('toggle-theme')"
+          :aria-label="isLight ? 'Cambiar a tema oscuro' : 'Cambiar a tema claro'">
+          <svg v-if="isLight" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg v-else width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
+        </button>
+        <RouterLink to="/participa" class="btn btn-ink btn-sm cta-desktop">Participa</RouterLink>
+        <button class="icon-btn menu-btn" type="button" @click="abierto = !abierto"
+          :aria-expanded="abierto" aria-controls="menu-movil" aria-label="Abrir menú">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path v-if="!abierto" d="M3 6h18M3 12h18M3 18h18"/>
+            <path v-else d="M18 6 6 18M6 6l12 12"/>
           </svg>
         </button>
-
-        <RouterLink to="/comunidad" class="btn-nav">Únete gratis</RouterLink>
       </div>
-
-      <!-- Mobile toggle -->
-      <button class="menu-btn" @click="menuOpen = !menuOpen" :aria-expanded="menuOpen" aria-label="Menú">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <line v-if="!menuOpen" x1="3" y1="6"  x2="21" y2="6"/>
-          <line v-if="!menuOpen" x1="3" y1="12" x2="21" y2="12"/>
-          <line v-if="!menuOpen" x1="3" y1="18" x2="21" y2="18"/>
-          <line v-if="menuOpen"  x1="18" y1="6"  x2="6"  y2="18"/>
-          <line v-if="menuOpen"  x1="6"  y1="6"  x2="18" y2="18"/>
-        </svg>
-      </button>
     </nav>
 
-    <!-- Mobile drawer -->
-    <div v-if="menuOpen" class="mobile-menu" @click.self="menuOpen = false">
-      <ul role="list">
-        <li v-for="l in links" :key="l.to">
-          <RouterLink :to="l.to" class="mobile-link" active-class="active" @click="menuOpen = false">
-            {{ l.label }}
-          </RouterLink>
+    <div v-if="abierto" id="menu-movil" class="menu-movil">
+      <ul class="container">
+        <li v-for="l in navegacion" :key="l.to">
+          <RouterLink :to="l.to" class="link-movil" @click="abierto = false">{{ l.label }}</RouterLink>
         </li>
-        <li><RouterLink to="/comunidad" class="mobile-cta" @click="menuOpen = false">Únete gratis</RouterLink></li>
+        <li><RouterLink to="/participa" class="btn btn-primary full" @click="abierto = false">Participa</RouterLink></li>
       </ul>
     </div>
   </header>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { RouterLink } from 'vue-router';
+import { navegacion } from '../data/contenido.js';
 
-defineProps({ isLight: Boolean });
-defineEmits(['toggleTheme']);
+defineProps({ isLight: { type: Boolean, default: true } });
+defineEmits(['toggle-theme']);
 
-const links = [
-  { to: '/eventos',   label: 'Eventos'   },
-  { to: '/comunidad', label: 'Comunidad' },
-  { to: '/mentores',  label: 'Mentores'  },
-  { to: '/sobre',     label: 'Sobre PLC' },
-];
-
-const scrolled  = ref(false);
-const menuOpen  = ref(false);
-
-function onScroll() { scrolled.value = window.scrollY > 40; }
-onMounted(()  => window.addEventListener('scroll', onScroll, { passive: true }));
-onBeforeUnmount(() => window.removeEventListener('scroll', onScroll));
+const scrolled = ref(false);
+const abierto = ref(false);
+const onScroll = () => { scrolled.value = window.scrollY > 8; };
+onMounted(() => { onScroll(); window.addEventListener('scroll', onScroll, { passive: true }); });
+onUnmounted(() => window.removeEventListener('scroll', onScroll));
 </script>
 
 <style scoped>
-.nav-wrapper {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: var(--bg);
-  border-bottom: 1px solid transparent;
-  transition: border-color .25s, box-shadow .25s;
+.nav-wrap {
+  position: fixed; inset: 0 0 auto 0; z-index: 50; height: var(--nav-h);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid transparent; transition: border-color .2s, box-shadow .2s;
 }
-.nav-wrapper.scrolled {
-  border-color: var(--border);
-  box-shadow: var(--shadow);
-}
+.nav-wrap.scrolled { border-bottom-color: var(--border); box-shadow: 0 2px 12px rgba(0,0,0,.04); }
+.skip-link { position: absolute; left: -999px; }
+.skip-link:focus { left: 16px; top: 12px; z-index: 60; background: var(--ink); color: #fff; padding: 8px 14px; border-radius: 8px; }
 
-.nav {
-  max-width: var(--container);
-  margin: 0 auto;
-  padding: 0 1.5rem;
-  height: var(--nav-h);
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
+.nav { height: 100%; display: flex; align-items: center; gap: 24px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--font-display); font-weight: 800; font-size: 1.05rem; color: var(--text); white-space: nowrap; min-width: 0; }
+.brand span { overflow: hidden; text-overflow: ellipsis; }
+.links { list-style: none; display: none; gap: 4px; margin: 0 0 0 auto; padding: 0; }
+.link { display: block; padding: 8px 14px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: .95rem; color: var(--text); }
+.link:hover { background: var(--bg-alt); }
+.link.active { color: var(--azul); }
+.acciones { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.icon-btn { display: grid; place-items: center; width: 42px; height: 42px; flex: none; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; }
+.btn-sm { padding: 10px 20px; font-size: .92rem; }
+.cta-desktop { display: none; }
 
-/* Brand */
-.brand {
-  display: flex; align-items: center; gap: .6rem;
-  text-decoration: none; color: var(--text);
-  font-weight: 700; font-size: .92rem;
-  letter-spacing: -.01em; flex-shrink: 0;
-}
-.brand img { border-radius: 6px; }
+.menu-movil { background: var(--bg); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-lg); }
+.menu-movil ul { list-style: none; margin: 0 auto; padding-top: 8px; padding-bottom: 20px; display: grid; gap: 4px; }
+.link-movil { display: block; padding: 14px 4px; font-weight: 700; font-size: 1.1rem; text-decoration: none; border-bottom: 1px solid var(--border); }
+.full { width: 100%; margin-top: 12px; }
 
-/* Desktop links */
-.links {
-  display: flex; gap: .15rem;
-  margin: 0; padding: 0; list-style: none;
-  flex: 1;
-}
-.nav-link {
-  display: block;
-  padding: .45rem .85rem;
-  border-radius: var(--radius);
-  text-decoration: none;
-  font-size: .88rem; font-weight: 500;
-  color: var(--text-dim);
-  transition: color .2s, background .2s;
-  white-space: nowrap;
-}
-.nav-link:hover, .nav-link.active {
-  color: var(--text);
-  background: var(--bg-alt);
-}
-
-/* Actions */
-.nav-actions { display: flex; align-items: center; gap: .65rem; flex-shrink: 0; }
-
-.theme-btn {
-  display: flex; align-items: center; justify-content: center;
-  width: 36px; height: 36px;
-  border-radius: var(--radius); border: 1px solid var(--border);
-  background: transparent; color: var(--text-dim);
-  cursor: pointer; transition: background .2s, color .2s;
-}
-.theme-btn:hover { background: var(--bg-alt); color: var(--text); }
-
-.btn-nav {
-  padding: .48rem 1.1rem;
-  background: var(--blue); color: #fff;
-  border-radius: var(--radius);
-  text-decoration: none; font-size: .87rem; font-weight: 600;
-  white-space: nowrap;
-  transition: background .2s, transform .15s;
-}
-.btn-nav:hover { background: var(--blue-dark); transform: translateY(-1px); }
-
-/* Mobile toggle */
-.menu-btn {
-  display: none;
-  align-items: center; justify-content: center;
-  width: 36px; height: 36px; margin-left: auto;
-  border-radius: var(--radius); border: 1px solid var(--border);
-  background: transparent; color: var(--text-dim);
-  cursor: pointer; transition: background .2s;
-}
-.menu-btn:hover { background: var(--bg-alt); }
-
-/* Mobile drawer */
-.mobile-menu {
-  border-top: 1px solid var(--border);
-  background: var(--bg);
-  padding: .75rem 1.5rem 1.25rem;
-}
-.mobile-menu ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: .15rem; }
-.mobile-link {
-  display: block; padding: .65rem .75rem;
-  border-radius: var(--radius);
-  text-decoration: none; font-size: .95rem; font-weight: 500;
-  color: var(--text-dim); transition: background .2s, color .2s;
-}
-.mobile-link:hover, .mobile-link.active { background: var(--bg-alt); color: var(--text); }
-.mobile-cta {
-  display: block; margin-top: .5rem; padding: .75rem;
-  background: var(--blue); color: #fff;
-  border-radius: var(--radius); text-align: center;
-  text-decoration: none; font-weight: 700; font-size: .95rem;
-  transition: background .2s;
-}
-.mobile-cta:hover { background: var(--blue-dark); }
-
-@media (max-width: 760px) {
-  .links, .nav-actions { display: none; }
-  .menu-btn { display: flex; }
-}
-@media (max-width: 460px) {
-  .brand span { display: none; }
+@media (max-width: 420px) { .brand span { font-size: .92rem; } .nav { gap: 12px; } }
+@media (min-width: 1024px) {
+  .links { display: flex; }
+  .acciones { margin-left: 8px; }
+  .cta-desktop { display: inline-flex; }
+  .menu-btn { display: none; }
 }
 </style>
